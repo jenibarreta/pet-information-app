@@ -89,7 +89,6 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
 
     _controller.forward();
 
-    // Show splash screen for 5 seconds.
     Future.delayed(const Duration(seconds: 5), () {
       if (!mounted) return;
 
@@ -112,77 +111,95 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
     return Scaffold(
       backgroundColor: PetInformationApp.cream,
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isLandscape =
+                constraints.maxWidth > constraints.maxHeight;
 
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: ScaleTransition(
-                  scale: _scaleAnimation,
-                  child: Image.asset(
-                    'assets/app_icon.png',
-                    width: 155,
-                    height: 155,
-                    fit: BoxFit.contain,
-                  ),
+            final logoSize = isLandscape ? 100.0 : 155.0;
+            final titleSize = isLandscape ? 21.0 : 25.0;
+            final topSpacing = isLandscape ? 8.0 : 25.0;
+            final sectionSpacing = isLandscape ? 6.0 : 10.0;
+
+            return Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: ScaleTransition(
+                        scale: _scaleAnimation,
+                        child: Image.asset(
+                          'assets/app_icon.png',
+                          width: logoSize,
+                          height: logoSize,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: topSpacing),
+
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: Text(
+                        'Pet Information App',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: titleSize,
+                          fontWeight: FontWeight.bold,
+                          color: PetInformationApp.cocoa,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: sectionSpacing),
+
+                    const Text(
+                      'A little care for every paw 🐾',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: PetInformationApp.cocoa,
+                      ),
+                    ),
+
+                    SizedBox(height: isLandscape ? 16 : 35),
+
+                    const SizedBox(
+                      width: 145,
+                      child: LinearProgressIndicator(
+                        backgroundColor: Color(0xFFF5D8CC),
+                        color: PetInformationApp.coral,
+                        minHeight: 5,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    const Text(
+                      'Getting things ready...',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: PetInformationApp.cocoa,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-
-              const SizedBox(height: 25),
-
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: const Text(
-                  'Pet Information App',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: PetInformationApp.cocoa,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              const Text(
-                'A little care for every paw 🐾',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: PetInformationApp.cocoa,
-                ),
-              ),
-
-              const Spacer(),
-
-              const SizedBox(
-                width: 145,
-                child: LinearProgressIndicator(
-                  backgroundColor: Color(0xFFF5D8CC),
-                  color: PetInformationApp.coral,
-                  minHeight: 5,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 15),
-
-              const Text(
-                'Getting things ready...',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: PetInformationApp.cocoa,
-                ),
-              ),
-
-              const SizedBox(height: 45),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

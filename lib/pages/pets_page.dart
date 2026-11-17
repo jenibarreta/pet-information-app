@@ -209,499 +209,507 @@ class PetsPage extends StatelessWidget {
           final pets = snapshot.data?.docs ?? [];
           final hasPets = pets.isNotEmpty;
 
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 12, 20, 18),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: coral,
-                    borderRadius: BorderRadius.circular(23),
-                    boxShadow: [
-                      BoxShadow(
-                        color: coral.withValues(alpha: 0.16),
-                        blurRadius: 12,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Your Pet Family 🐾',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 21,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 7),
-                            Text(
-                              'All your lovely companions in one place.',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                height: 1.4,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Container(
-                        width: 65,
-                        height: 65,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.22),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Center(
-                          child: Text(
-                            '🐶',
-                            style: TextStyle(fontSize: 36),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              final isLandscape =
+                  constraints.maxWidth > constraints.maxHeight;
+
+              final horizontalPadding = isLandscape ? 28.0 : 20.0;
+              final headerPadding = isLandscape ? 15.0 : 20.0;
+              final headerTop = isLandscape ? 8.0 : 12.0;
+              final headerBottom = isLandscape ? 12.0 : 18.0;
+              final headerTitleSize = isLandscape ? 19.0 : 21.0;
+              final headerIconSize = isLandscape ? 52.0 : 65.0;
+
+              return ListView(
+                padding: EdgeInsets.fromLTRB(
+                  horizontalPadding,
+                  headerTop,
+                  horizontalPadding,
+                  90,
                 ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 17,
-                    vertical: 15,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 43,
-                        height: 43,
-                        decoration: BoxDecoration(
-                          color: cream,
-                          borderRadius: BorderRadius.circular(13),
+                children: [
+                  // PET FAMILY HEADER
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(headerPadding),
+                    decoration: BoxDecoration(
+                      color: coral,
+                      borderRadius: BorderRadius.circular(23),
+                      boxShadow: [
+                        BoxShadow(
+                          color: coral.withValues(alpha: 0.16),
+                          blurRadius: 12,
+                          offset: const Offset(0, 5),
                         ),
-                        child: const Center(
-                          child: Text(
-                            '🐾',
-                            style: TextStyle(fontSize: 23),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 13),
-                      const Expanded(
-                        child: Text(
-                          'Total Registered Pets',
-                          style: TextStyle(
-                            color: cocoa,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        pets.length.toString(),
-                        style: const TextStyle(
-                          color: coral,
-                          fontSize: 27,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              Expanded(
-                child: !hasPets
-                    ? SingleChildScrollView(
-                        padding: const EdgeInsets.fromLTRB(
-                          20, 5, 20, 25,
-                        ),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 22,
-                            vertical: 28,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(24),
-                            border: Border.all(
-                              color: coral.withValues(alpha: 0.13),
-                            ),
-                          ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        const Expanded(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                width: 125,
-                                height: 125,
-                                decoration: const BoxDecoration(
-                                  color: cream,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    '🐶🐱',
-                                    style: TextStyle(fontSize: 48),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 22),
-                              const Text(
-                                'Your pet family is waiting!',
-                                textAlign: TextAlign.center,
+                              Text(
+                                'Your Pet Family 🐾',
                                 style: TextStyle(
-                                  color: cocoa,
-                                  fontSize: 19,
+                                  color: Colors.white,
+                                  fontSize: 21,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 9),
+                              SizedBox(height: 7),
                               Text(
-                                'You have not added any pets yet. '
-                                'Register your first dog or cat and '
-                                'keep their information organized.',
-                                textAlign: TextAlign.center,
+                                'All your lovely companions in one place.',
                                 style: TextStyle(
-                                  color: cocoa.withValues(alpha: 0.65),
-                                  fontSize: 13,
-                                  height: 1.6,
-                                ),
-                              ),
-                              const SizedBox(height: 23),
-                              SizedBox(
-                                width: double.infinity,
-                                child: ElevatedButton.icon(
-                                  onPressed: () => addPet(context),
-                                  icon: const Icon(Icons.add_rounded),
-                                  label: const Text('Add Your First Pet'),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: coral,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 15,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    elevation: 0,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 17),
-                              const Text(
-                                'Every pet deserves a little extra care. ❤️',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: gold,
+                                  color: Colors.white,
                                   fontSize: 12,
-                                  fontWeight: FontWeight.w600,
+                                  height: 1.4,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      )
-                    : ListView.builder(
-                        padding: const EdgeInsets.fromLTRB(
-                          20, 0, 20, 90,
+                        const SizedBox(width: 10),
+                        Container(
+                          width: headerIconSize,
+                          height: headerIconSize,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.22),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Center(
+                            child: Text(
+                              '🐶',
+                              style: TextStyle(fontSize: 36),
+                            ),
+                          ),
                         ),
-                        itemCount: pets.length,
-                        itemBuilder: (context, index) {
-                          final document = pets[index];
-                          final pet = document.data();
+                      ],
+                    ),
+                  ),
 
-                          final petName =
-                              pet['petName']?.toString() ?? 'Unnamed Pet';
-                          final animalType =
-                              pet['animalType']?.toString() ?? 'Pet';
-                          final breed =
-                              pet['breed']?.toString() ?? 'Not specified';
-                          final age =
-                              pet['age']?.toString() ?? 'Not specified';
-                          final ageUnit =
-                              pet['ageUnit']?.toString() ?? 'Years';
-                          final gender =
-                              pet['gender']?.toString() ?? 'Not specified';
-                          final weight =
-                              pet['weight']?.toString() ?? 'Not specified';
-                          final vaccination =
-                              pet['vaccinationStatus']?.toString() ??
-                                  'Not specified';
-                          final health =
-                              pet['healthStatus']?.toString() ??
-                                  'Not specified';
+                  SizedBox(height: isLandscape ? 12 : 18),
 
-                          final emoji = getPetEmoji(animalType);
+                  // TOTAL PETS
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 17,
+                      vertical: isLandscape ? 11 : 15,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 43,
+                          height: 43,
+                          decoration: BoxDecoration(
+                            color: cream,
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              '🐾',
+                              style: TextStyle(fontSize: 23),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 13),
+                        const Expanded(
+                          child: Text(
+                            'Total Registered Pets',
+                            style: TextStyle(
+                              color: cocoa,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          pets.length.toString(),
+                          style: const TextStyle(
+                            color: coral,
+                            fontSize: 27,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
-                          return Dismissible(
-                            key: ValueKey(document.id),
-                            direction: DismissDirection.horizontal,
+                  SizedBox(height: isLandscape ? 16 : 24),
 
-                            confirmDismiss: (direction) async {
-                              if (direction ==
-                                  DismissDirection.startToEnd) {
-                                editPet(
-                                  context,
-                                  document.id,
-                                  pet,
-                                );
-                                return false;
-                              }
-
-                              if (direction ==
-                                  DismissDirection.endToStart) {
-                                final confirmed =
-                                    await confirmDelete(context);
-
-                                if (!confirmed) return false;
-
-                                return await deletePet(
-                                  context,
-                                  document.id,
-                                );
-                              }
-
-                              return false;
-                            },
-
-                            background: Container(
-                              margin: const EdgeInsets.only(bottom: 14),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 24,
-                              ),
-                              decoration: BoxDecoration(
-                                color: coral,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              alignment: Alignment.centerLeft,
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.edit_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    'EDIT',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
+                  // EMPTY STATE
+                  if (!hasPets)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 22,
+                        vertical: 28,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(
+                          color: coral.withValues(alpha: 0.13),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 125,
+                            height: 125,
+                            decoration: const BoxDecoration(
+                              color: cream,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Center(
+                              child: Text(
+                                '🐶🐱',
+                                style: TextStyle(fontSize: 48),
                               ),
                             ),
-
-                            secondaryBackground: Container(
-                              margin: const EdgeInsets.only(bottom: 14),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 24,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.red.shade400,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              alignment: Alignment.centerRight,
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.delete_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    'DELETE',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          ),
+                          const SizedBox(height: 22),
+                          const Text(
+                            'Your pet family is waiting!',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: cocoa,
+                              fontSize: 19,
+                              fontWeight: FontWeight.bold,
                             ),
-
-                            child: Container(
-                              margin: const EdgeInsets.only(bottom: 14),
-                              padding: const EdgeInsets.all(17),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: coral.withValues(alpha: 0.12),
+                          ),
+                          const SizedBox(height: 9),
+                          Text(
+                            'You have not added any pets yet. '
+                            'Register your first dog or cat and '
+                            'keep their information organized.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: cocoa.withValues(alpha: 0.65),
+                              fontSize: 13,
+                              height: 1.6,
+                            ),
+                          ),
+                          const SizedBox(height: 23),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              onPressed: () => addPet(context),
+                              icon: const Icon(Icons.add_rounded),
+                              label: const Text('Add Your First Pet'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: coral,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 15,
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: cocoa.withValues(alpha: 0.035),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                elevation: 0,
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                          ),
+                          const SizedBox(height: 17),
+                          const Text(
+                            'Every pet deserves a little extra care. ❤️',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: gold,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  // PET RECORDS
+                  if (hasPets)
+                    ...pets.map((document) {
+                      final pet = document.data();
+
+                      final petName =
+                          pet['petName']?.toString() ?? 'Unnamed Pet';
+                      final animalType =
+                          pet['animalType']?.toString() ?? 'Pet';
+                      final breed =
+                          pet['breed']?.toString() ?? 'Not specified';
+                      final age =
+                          pet['age']?.toString() ?? 'Not specified';
+                      final ageUnit =
+                          pet['ageUnit']?.toString() ?? 'Years';
+                      final gender =
+                          pet['gender']?.toString() ?? 'Not specified';
+                      final weight =
+                          pet['weight']?.toString() ?? 'Not specified';
+                      final vaccination =
+                          pet['vaccinationStatus']?.toString() ??
+                              'Not specified';
+                      final health =
+                          pet['healthStatus']?.toString() ??
+                              'Not specified';
+
+                      final emoji = getPetEmoji(animalType);
+
+                      return Dismissible(
+                        key: ValueKey(document.id),
+                        direction: DismissDirection.horizontal,
+                        confirmDismiss: (direction) async {
+                          if (direction ==
+                              DismissDirection.startToEnd) {
+                            editPet(
+                              context,
+                              document.id,
+                              pet,
+                            );
+                            return false;
+                          }
+
+                          if (direction ==
+                              DismissDirection.endToStart) {
+                            final confirmed =
+                                await confirmDelete(context);
+
+                            if (!confirmed) return false;
+
+                            return await deletePet(
+                              context,
+                              document.id,
+                            );
+                          }
+
+                          return false;
+                        },
+                        background: Container(
+                          margin: const EdgeInsets.only(bottom: 14),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                          ),
+                          decoration: BoxDecoration(
+                            color: coral,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          alignment: Alignment.centerLeft,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.edit_rounded,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'EDIT',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        secondaryBackground: Container(
+                          margin: const EdgeInsets.only(bottom: 14),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.red.shade400,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          alignment: Alignment.centerRight,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.delete_rounded,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'DELETE',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 14),
+                          padding: EdgeInsets.all(
+                            isLandscape ? 14 : 17,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: coral.withValues(alpha: 0.12),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: cocoa.withValues(alpha: 0.035),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 65,
-                                        height: 65,
-                                        decoration: BoxDecoration(
-                                          color: cream,
-                                          borderRadius:
-                                              BorderRadius.circular(18),
+                                  Container(
+                                    width: 65,
+                                    height: 65,
+                                    decoration: BoxDecoration(
+                                      color: cream,
+                                      borderRadius:
+                                          BorderRadius.circular(18),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        emoji,
+                                        style: const TextStyle(
+                                          fontSize: 36,
                                         ),
-                                        child: Center(
-                                          child: Text(
-                                            emoji,
-                                            style: const TextStyle(
-                                              fontSize: 36,
-                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 14),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          petName,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            color: cocoa,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 19,
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 14),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              petName,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                color: cocoa,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 19,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 6),
-                                            Text(
-                                              '$animalType • $breed',
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                color: cocoa,
-                                                fontSize: 13,
-                                                height: 1.4,
-                                              ),
-                                            ),
-                                          ],
+                                        const SizedBox(height: 6),
+                                        Text(
+                                          '$animalType • $breed',
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            color: cocoa,
+                                            fontSize: 13,
+                                            height: 1.4,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  const SizedBox(height: 16),
-                                  const Divider(
-                                    color: Color(0xFFF2E7DD),
-                                    height: 1,
-                                  ),
-                                  const SizedBox(height: 13),
-
-                                  const Text(
-                                    'PET INFORMATION',
-                                    style: TextStyle(
-                                      color: cocoa,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 0.8,
+                                      ],
                                     ),
-                                  ),
-
-                                  const SizedBox(height: 11),
-
-                                  _PetInfoRow(
-                                    icon: Icons.cake_outlined,
-                                    label: 'Age',
-                                    value: '$age $ageUnit',
-                                  ),
-                                  _PetInfoRow(
-                                    icon: Icons.pets_rounded,
-                                    label: 'Gender',
-                                    value: gender,
-                                  ),
-                                  _PetInfoRow(
-                                    icon: Icons.monitor_weight_outlined,
-                                    label: 'Weight',
-                                    value: '$weight kg',
-                                  ),
-
-                                  const SizedBox(height: 13),
-
-                                  const Text(
-                                    'HEALTH INFORMATION',
-                                    style: TextStyle(
-                                      color: cocoa,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 0.8,
-                                    ),
-                                  ),
-
-                                  const SizedBox(height: 11),
-
-                                  _PetInfoRow(
-                                    icon: Icons.vaccines_rounded,
-                                    label: 'Vaccination Status',
-                                    value: vaccination,
-                                  ),
-                                  _PetInfoRow(
-                                    icon: Icons.health_and_safety_rounded,
-                                    label: 'Health Status',
-                                    value: health,
-                                  ),
-
-                                  const SizedBox(height: 10),
-
-                                  const Row(
-                                    children: [
-                                      Icon(
-                                        Icons.swipe_rounded,
-                                        size: 16,
-                                        color: coral,
-                                      ),
-                                      SizedBox(width: 6),
-                                      Text(
-                                        'Swipe right to edit • left to delete',
-                                        style: TextStyle(
-                                          color: cocoa,
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w500,
-                                      ),
-                                      ),
-                                    ],
                                   ),
                                 ],
                               ),
-                            ),
-                          );
-                        },
-                      ),
-              ),
-            ],
+
+                              const SizedBox(height: 16),
+                              const Divider(
+                                color: Color(0xFFF2E7DD),
+                                height: 1,
+                              ),
+                              const SizedBox(height: 13),
+
+                              const Text(
+                                'PET INFORMATION',
+                                style: TextStyle(
+                                  color: cocoa,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.8,
+                                ),
+                              ),
+
+                              const SizedBox(height: 11),
+
+                              _PetInfoRow(
+                                icon: Icons.cake_outlined,
+                                label: 'Age',
+                                value: '$age $ageUnit',
+                              ),
+                              _PetInfoRow(
+                                icon: Icons.pets_rounded,
+                                label: 'Gender',
+                                value: gender,
+                              ),
+                              _PetInfoRow(
+                                icon: Icons.monitor_weight_outlined,
+                                label: 'Weight',
+                                value: '$weight kg',
+                              ),
+
+                              const SizedBox(height: 13),
+
+                              const Text(
+                                'HEALTH INFORMATION',
+                                style: TextStyle(
+                                  color: cocoa,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.8,
+                                ),
+                              ),
+
+                              const SizedBox(height: 11),
+
+                              _PetInfoRow(
+                                icon: Icons.vaccines_rounded,
+                                label: 'Vaccination Status',
+                                value: vaccination,
+                              ),
+                              _PetInfoRow(
+                                icon: Icons.health_and_safety_rounded,
+                                label: 'Health Status',
+                                value: health,
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              const Row(
+                                children: [
+                                  Icon(
+                                    Icons.swipe_rounded,
+                                    size: 16,
+                                    color: coral,
+                                  ),
+                                  SizedBox(width: 6),
+                                  Expanded(
+                                    child: Text(
+                                      'Swipe right to edit • left to delete',
+                                      style: TextStyle(
+                                        color: cocoa,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+                ],
+              );
+            },
           );
         },
       ),
@@ -783,4 +791,5 @@ class _PetInfoRow extends StatelessWidget {
     );
   }
 }
+
 
